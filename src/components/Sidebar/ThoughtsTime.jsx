@@ -15,7 +15,7 @@ const ThoughtsTime = () => (
       We don't have any notice for you, till then you can share your thoughts
       with your peers.
     </p>
-    <button className="w-full py-2 bg-white text-sm text-gray-900 rounded-lg hover:bg-indigo-700">
+    <button className="w-full py-2 bg-white text-sm text-gray-900 rounded-lg">
       Write a message
     </button>
   </div>

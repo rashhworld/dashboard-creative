@@ -10,7 +10,7 @@ const BoardHeader = () => (
       </div>
 
       <div className="flex items-center space-x-4">
-        <button className="flex items-center space-x-2 py-2 text-indigo-600 hover:bg-indigo-50 rounded-lg">
+        <button className="flex items-center space-x-2 py-2 text-indigo-600">
           <img src="/icons/plus-square.svg" alt="" />
           <span className="text-sm font-medium">Invite</span>
         </button>
