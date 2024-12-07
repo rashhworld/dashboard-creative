@@ -6,6 +6,10 @@ const initialState = {
         inProgress: [],
         done: [],
     },
+    filters: {
+        priority: "All",
+        date: "All"
+    }
 };
 
 const tasksSlice = createSlice({
@@ -26,8 +30,12 @@ const tasksSlice = createSlice({
                 state.tasks[targetList] = target;
             }
         },
+        setFilters: (state, action) => {
+            const { type, value } = action.payload;
+            state.filters[type] = value;
+        },
     },
 });
 
-export const { addTask, updateTaskLists } = tasksSlice.actions;
+export const { addTask, updateTaskLists, setFilters } = tasksSlice.actions;
 export default tasksSlice.reducer; 

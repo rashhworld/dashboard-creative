@@ -8,6 +8,7 @@ const AddTaskModal = ({ isOpen, onClose, status }) => {
     title: "",
     description: "",
     priority: "Low",
+    dueDate: new Date().toISOString().split("T")[0],
   });
 
   const handleSubmit = (e) => {
@@ -18,15 +19,26 @@ const AddTaskModal = ({ isOpen, onClose, status }) => {
         task: taskData,
       })
     );
-    setTaskData({ title: "", description: "", priority: "Low" });
+    setTaskData({
+      title: "",
+      description: "",
+      priority: "Low",
+      dueDate: new Date().toISOString().split("T")[0],
+    });
     onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-xl w-96">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white p-6 rounded-xl w-[500px]"
+        onClick={(e) => e.stopPropagation()}
+      >
         <h2 className="text-xl font-bold mb-4">Add New Task</h2>
         <form onSubmit={handleSubmit}>
           <div className="space-y-4">
@@ -67,6 +79,18 @@ const AddTaskModal = ({ isOpen, onClose, status }) => {
                 <option>Low</option>
                 <option>High</option>
               </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Due Date</label>
+              <input
+                type="date"
+                value={taskData.dueDate}
+                onChange={(e) =>
+                  setTaskData({ ...taskData, dueDate: e.target.value })
+                }
+                className="w-full p-2 border rounded-md"
+                required
+              />
             </div>
           </div>
           <div className="flex justify-end space-x-2 mt-6">

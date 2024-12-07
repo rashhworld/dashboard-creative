@@ -10,6 +10,7 @@ const KanbanBoard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("");
   const tasks = useSelector((state) => state.tasks.tasks);
+  const filters = useSelector((state) => state.tasks.filters);
 
   const handleAddClick = (status) => {
     setSelectedStatus(status);
@@ -44,6 +45,43 @@ const KanbanBoard = () => {
     },
   };
 
+  const filterTasks = (taskList) => {
+    return taskList.filter((task) => {
+      const priorityMatch =
+        filters.priority === "All" || task.priority === filters.priority;
+
+      let dateMatch = true;
+      if (filters.date !== "All") {
+        const taskDate = new Date(task.dueDate);
+        const today = new Date();
+
+        switch (filters.date) {
+          case "Today":
+            dateMatch = taskDate.toDateString() === today.toDateString();
+            break;
+          case "This Week":
+            const weekEnd = new Date(today);
+            weekEnd.setDate(today.getDate() + 7);
+            dateMatch = taskDate >= today && taskDate <= weekEnd;
+            break;
+          case "This Month":
+            dateMatch =
+              taskDate.getMonth() === today.getMonth() &&
+              taskDate.getFullYear() === today.getFullYear();
+            break;
+        }
+      }
+
+      return priorityMatch && dateMatch;
+    });
+  };
+
+  const filteredTasks = {
+    todo: filterTasks(tasks.todo),
+    inProgress: filterTasks(tasks.inProgress),
+    done: filterTasks(tasks.done),
+  };
+
   return (
     <>
       <div className="grid grid-cols-3 gap-6">
@@ -64,12 +102,12 @@ const KanbanBoard = () => {
             />
           </div>
           <ReactSortable
-            list={tasks.todo.map((item) => ({ ...item }))}
+            list={filteredTasks.todo.map((item) => ({ ...item }))}
             setList={(newState) => updateList(newState, "todo")}
             className="space-y-4 min-h-[50px]"
             {...sortableOptions}
           >
-            {tasks.todo.map((task) => (
+            {filteredTasks.todo.map((task) => (
               <TaskCard key={task.id} task={task} />
             ))}
           </ReactSortable>
@@ -86,12 +124,12 @@ const KanbanBoard = () => {
             </div>
           </div>
           <ReactSortable
-            list={tasks.inProgress.map((item) => ({ ...item }))}
+            list={filteredTasks.inProgress.map((item) => ({ ...item }))}
             setList={(newState) => updateList(newState, "inProgress")}
             className="space-y-4 min-h-[50px]"
             {...sortableOptions}
           >
-            {tasks.inProgress.map((task) => (
+            {filteredTasks.inProgress.map((task) => (
               <TaskCard key={task.id} task={task} />
             ))}
           </ReactSortable>
@@ -108,12 +146,12 @@ const KanbanBoard = () => {
             </div>
           </div>
           <ReactSortable
-            list={tasks.done.map((item) => ({ ...item }))}
+            list={filteredTasks.done.map((item) => ({ ...item }))}
             setList={(newState) => updateList(newState, "done")}
             className="space-y-4 min-h-[50px]"
             {...sortableOptions}
           >
-            {tasks.done.map((task) => (
+            {filteredTasks.done.map((task) => (
               <TaskCard key={task.id} task={task} />
             ))}
           </ReactSortable>
