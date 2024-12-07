@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ReactSortable } from "react-sortablejs";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import TaskCard from "./TaskCard";
 import AddTaskModal from "./AddTaskModal";
 import { updateTaskLists } from "../../store/tasksSlice";
 
 const KanbanBoard = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("");
   const tasks = useSelector((state) => state.tasks.tasks);
@@ -98,7 +103,9 @@ const KanbanBoard = () => {
               src="/icons/plus-square.svg"
               className="cursor-pointer"
               alt=""
-              onClick={() => handleAddClick("todo")}
+              onClick={
+                !user ? () => navigate("/login") : () => handleAddClick("todo")
+              }
             />
           </div>
           <ReactSortable
