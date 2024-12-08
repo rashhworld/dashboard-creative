@@ -7,10 +7,10 @@ const Sidebar = () => (
     <div>
       <div className="flex justify-between items-center gap-2 h-16 p-4">
         <div className="flex items-center gap-2">
-          <img src="/logo.svg" alt="" />
+          <img src="/logo.svg" alt="logo" />
           <h1 className="text-xl font-semibold text-gray-900">Project M.</h1>
         </div>
-        <img src="/icons/chevron-left.svg" alt="" />
+        <img src="/icons/chevron-left.svg" alt="chevron left icon" />
       </div>
 
       <hr />
@@ -28,7 +28,7 @@ const Sidebar = () => (
       <div>
         <div className="flex justify-between items-center p-5">
           <h2 className="text-sm font-semibold text-gray-500">MY PROJECTS</h2>
-          <img src="/icons/add-square.svg" alt="" />
+          <img src="/icons/add-square.svg" alt="add square icon" />
         </div>
         <div className="space-y-2 px-1.5">
           <ProjectItem color="bg-green-500" text="Mobile App" active={true} />

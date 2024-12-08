@@ -15,7 +15,7 @@ const TaskCard = ({ task }) => {
         >
           {priority}
         </span>
-        <img src="/icons/dot.svg" alt="" />
+        <img src="/icons/dot.svg" alt="dot icon" />
       </div>
 
       <h4 className="font-semibold mb-2">{title}</h4>
@@ -35,11 +35,11 @@ const TaskCard = ({ task }) => {
 
         <div className="flex items-center space-x-4 text-gray-400 text-xs font-medium">
           <div className="flex items-center space-x-1">
-            <img src="/icons/message.svg" className="h-4" alt="" />
+            <img src="/icons/message.svg" className="h-4" alt="message icon" />
             <span>12 comments</span>
           </div>
           <div className="flex items-center space-x-1">
-            <img src="/icons/folder.svg" className="h-4" alt="" />
+            <img src="/icons/folder.svg" className="h-4" alt="folder icon" />
             <span>3 files</span>
           </div>
         </div>

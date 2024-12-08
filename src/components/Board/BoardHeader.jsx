@@ -33,14 +33,14 @@ const BoardHeader = () => {
         <div className="flex items-center space-x-4">
           <h1 className="text-4xl font-bold">Mobile App</h1>
           <div className="flex space-x-2">
-            <img src="/icons/pen-square.svg" alt="" />
-            <img src="/icons/link-square.svg" alt="" />
+            <img src="/icons/pen-square.svg" alt="pen icon" />
+            <img src="/icons/link-square.svg" alt="link icon" />
           </div>
         </div>
 
         <div className="flex items-center space-x-4">
           <button className="flex items-center space-x-2 py-2 text-indigo-600">
-            <img src="/icons/plus-square.svg" alt="" />
+            <img src="/icons/plus-square.svg" alt="add icon" />
             <span className="text-sm font-medium">Invite</span>
           </button>
           <div className="flex -space-x-2">
@@ -68,11 +68,11 @@ const BoardHeader = () => {
               }
               className="flex items-center space-x-2 px-4 py-2 text-gray-600 bg-white border border-gray-800 rounded-md hover:bg-gray-50"
             >
-              <img src="/icons/filter.svg" className="h-4" alt="" />
+              <img src="/icons/filter.svg" className="h-4" alt="filter icon" />
               <span className="text-sm">
                 {filters.priority === "All" ? "Priority" : filters.priority}
               </span>
-              <img src="/icons/chevron-down.svg" alt="" />
+              <img src="/icons/chevron-down.svg" alt="chevron down icon" />
             </button>
 
             {openDropdown === "priority" && (
@@ -99,11 +99,15 @@ const BoardHeader = () => {
               }
               className="flex items-center space-x-2 px-4 py-2 text-gray-600 bg-white border border-gray-800 rounded-md hover:bg-gray-50"
             >
-              <img src="/icons/calendar.svg" className="h-4" alt="" />
+              <img
+                src="/icons/calendar.svg"
+                className="h-4"
+                alt="calendar icon"
+              />
               <span className="text-sm">
                 {filters.date === "All" ? "Due Date" : filters.date}
               </span>
-              <img src="/icons/chevron-down.svg" alt="" />
+              <img src="/icons/chevron-down.svg" alt="chevron down icon" />
             </button>
 
             {openDropdown === "date" && (
@@ -126,18 +130,22 @@ const BoardHeader = () => {
 
         <div className="flex items-center space-x-4">
           <button className="flex items-center space-x-2 px-4 py-2 text-gray-600 bg-white border border-gray-800 rounded-md hover:bg-gray-50">
-            <img src="/icons/profile.svg" className="h-4" alt="" />
+            <img src="/icons/profile.svg" className="h-4" alt="profile icon" />
             <span className="text-sm">Share</span>
           </button>
 
           <div className="h-6 border-r border-gray-800"></div>
 
           <button className="p-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
-            <img src="/icons/double-bar.svg" alt="" />
+            <img src="/icons/double-bar.svg" alt="double bar icon" />
           </button>
 
           <button className="text-gray-400 hover:text-gray-600">
-            <img src="/icons/category.svg" className="h-5" alt="" />
+            <img
+              src="/icons/category.svg"
+              className="h-5"
+              alt="category icon"
+            />
           </button>
         </div>
       </div>

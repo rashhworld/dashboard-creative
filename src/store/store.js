@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import tasksReducer from './tasksSlice';
+import activitiesReducer from './activitiesSlice';
 
 const loadState = () => {
   const serializedState = localStorage.getItem('kanbanState');
@@ -11,7 +12,10 @@ const saveState = (state) => {
 };
 
 const store = configureStore({
-  reducer: { tasks: tasksReducer },
+  reducer: {
+    tasks: tasksReducer,
+    activities: activitiesReducer
+  },
   preloadedState: loadState(),
 });
 

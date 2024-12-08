@@ -4,7 +4,11 @@ const ThoughtsTime = () => (
       <div className="absolute -top-7 bg-gray-100 rounded-full flex items-center justify-center p-4">
         <div className="relative">
           <div className="absolute -inset-2 bg-yellow-300/70 rounded-full blur-md animate-pulse"></div>
-          <img src="/icons/lamp-on.svg" alt="" className="relative" />
+          <img
+            src="/icons/lamp-on.svg"
+            alt="lamp on icon"
+            className="relative"
+          />
         </div>
       </div>
     </div>

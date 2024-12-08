@@ -17,17 +17,49 @@ const KanbanBoard = () => {
   const tasks = useSelector((state) => state.tasks.tasks);
   const filters = useSelector((state) => state.tasks.filters);
 
-  const handleAddClick = (status) => {
+  const handleAddTask = (status) => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
     setSelectedStatus(status);
     setIsModalOpen(true);
   };
 
   const updateList = (newState, listName) => {
+    if (!user) return;
     const cleanState = newState.map(
       ({ chosen, selected, filtered, ...item }) => ({
         ...item,
       })
     );
+
+    const addedTask = cleanState.find(
+      (task) => !tasks[listName].find((t) => t.id === task.id)
+    );
+
+    if (addedTask) {
+      const sourceList = Object.entries(tasks).find(([key, list]) =>
+        list.find((t) => t.id === addedTask.id)
+      )?.[0];
+
+      if (sourceList && sourceList !== listName) {
+        dispatch(
+          updateTaskLists({
+            source: cleanState,
+            target: cleanState,
+            sourceList: sourceList,
+            targetList: listName,
+            movedTask: {
+              title: addedTask.title,
+              from: sourceList,
+              to: listName,
+            },
+          })
+        );
+        return;
+      }
+    }
 
     dispatch(
       updateTaskLists({
@@ -42,12 +74,6 @@ const KanbanBoard = () => {
   const sortableOptions = {
     group: "shared",
     animation: 200,
-    setData: function (dataTransfer, dragEl) {
-      dataTransfer.setData("text", dragEl.textContent);
-    },
-    clone: function (item) {
-      return { ...item };
-    },
   };
 
   const filterTasks = (taskList) => {
@@ -96,23 +122,22 @@ const KanbanBoard = () => {
               <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
               <h3 className="font-semibold">To Do</h3>
               <span className="text-gray-500 bg-gray-200 rounded-full text-sm font-medium h-5 w-5 flex justify-center items-center">
-                {tasks.todo.length}
+                {filteredTasks.todo.length}
               </span>
             </div>
             <img
               src="/icons/plus-square.svg"
               className="cursor-pointer"
-              alt=""
-              onClick={
-                !user ? () => navigate("/login") : () => handleAddClick("todo")
-              }
+              alt="add square icon"
+              onClick={() => handleAddTask("todo")}
             />
           </div>
           <ReactSortable
             list={filteredTasks.todo.map((item) => ({ ...item }))}
             setList={(newState) => updateList(newState, "todo")}
-            className="space-y-4 min-h-[50px]"
+            className="space-y-4 min-h-[100px]"
             {...sortableOptions}
+            data-list="todo"
           >
             {filteredTasks.todo.map((task) => (
               <TaskCard key={task.id} task={task} />
@@ -126,15 +151,22 @@ const KanbanBoard = () => {
               <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
               <h3 className="font-semibold">In Progress</h3>
               <span className="text-gray-500 bg-gray-200 rounded-full text-sm font-medium h-5 w-5 flex justify-center items-center">
-                {tasks.inProgress.length}
+                {filteredTasks.inProgress.length}
               </span>
             </div>
+            <img
+              src="/icons/plus-square.svg"
+              className="cursor-pointer"
+              alt="add square icon"
+              onClick={() => handleAddTask("inProgress")}
+            />
           </div>
           <ReactSortable
             list={filteredTasks.inProgress.map((item) => ({ ...item }))}
             setList={(newState) => updateList(newState, "inProgress")}
-            className="space-y-4 min-h-[50px]"
+            className="space-y-4 min-h-[100px]"
             {...sortableOptions}
+            data-list="inProgress"
           >
             {filteredTasks.inProgress.map((task) => (
               <TaskCard key={task.id} task={task} />
@@ -148,15 +180,22 @@ const KanbanBoard = () => {
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               <h3 className="font-semibold">Done</h3>
               <span className="text-gray-500 bg-gray-200 rounded-full text-sm font-medium h-5 w-5 flex justify-center items-center">
-                {tasks.done.length}
+                {filteredTasks.done.length}
               </span>
             </div>
+            <img
+              src="/icons/plus-square.svg"
+              className="cursor-pointer"
+              alt="add square icon"
+              onClick={() => handleAddTask("done")}
+            />
           </div>
           <ReactSortable
             list={filteredTasks.done.map((item) => ({ ...item }))}
             setList={(newState) => updateList(newState, "done")}
-            className="space-y-4 min-h-[50px]"
+            className="space-y-4 min-h-[100px]"
             {...sortableOptions}
+            data-list="done"
           >
             {filteredTasks.done.map((task) => (
               <TaskCard key={task.id} task={task} />

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { addActivity } from './activitiesSlice';
 
 const initialState = {
     tasks: {
@@ -24,10 +25,10 @@ const tasksSlice = createSlice({
             });
         },
         updateTaskLists: (state, action) => {
-            const { source, target, sourceList, targetList } = action.payload;
+            const { sourceList, targetList, source } = action.payload;
             state.tasks[sourceList] = source;
-            if (targetList && targetList !== sourceList) {
-                state.tasks[targetList] = target;
+            if (targetList !== sourceList) {
+                state.tasks[targetList] = source;
             }
         },
         setFilters: (state, action) => {
@@ -37,5 +38,26 @@ const tasksSlice = createSlice({
     },
 });
 
-export const { addTask, updateTaskLists, setFilters } = tasksSlice.actions;
-export default tasksSlice.reducer; 
+export const addTask = (payload) => (dispatch) => {
+    dispatch(tasksSlice.actions.addTask(payload));
+    dispatch(addActivity({
+        message: `New task "${payload.task.title}" created in ${payload.status}`
+    }));
+};
+
+export const updateTaskLists = (payload) => (dispatch) => {
+    dispatch(tasksSlice.actions.updateTaskLists(payload));
+
+    if (payload.movedTask) {
+        const formatListName = (name) => {
+            return name === "inProgress" ? "In Progress" : name.charAt(0).toUpperCase() + name.slice(1);
+        };
+
+        dispatch(addActivity({
+            message: `Task "${payload.movedTask.title}" moved from ${formatListName(payload.movedTask.from)} to ${formatListName(payload.movedTask.to)}`
+        }));
+    }
+};
+
+export const { setFilters } = tasksSlice.actions;
+export default tasksSlice.reducer;

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
+import ActivityDropdown from "./ActivityDropdown";
 
 const TopNav = () => {
   const { user, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isActivityOpen, setIsActivityOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -21,7 +23,7 @@ const TopNav = () => {
         <div className="flex-1 max-w-md">
           <div className="relative">
             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-              <img src="/icons/search.svg" className="h-5" alt="" />
+              <img src="/icons/search.svg" className="h-5" alt="search icon" />
             </span>
             <input
               type="text"
@@ -32,14 +34,33 @@ const TopNav = () => {
         </div>
 
         <div className="flex items-center ml-4">
-          <button className="p-2 text-gray-400 hover:text-gray-600">
-            <img src="/icons/calendar.svg" className="w-6 h-6" alt="" />
+          <button
+            className="p-2 relative"
+            onClick={() => setIsActivityOpen(!isActivityOpen)}
+          >
+            <img
+              src="/icons/calendar.svg"
+              className="w-6 h-6"
+              alt="calendar icon"
+            />
+            <ActivityDropdown
+              isOpen={isActivityOpen}
+              onClose={() => setIsActivityOpen(false)}
+            />
           </button>
           <button className="p-2 text-gray-400 hover:text-gray-600">
-            <img src="/icons/message-question.svg" className="w-6 h-6" alt="" />
+            <img
+              src="/icons/message-question.svg"
+              className="w-6 h-6"
+              alt="message question icon"
+            />
           </button>
           <button className="p-2 text-gray-400 hover:text-gray-600">
-            <img src="/icons/notification.svg" className="w-6 h-6" alt="" />
+            <img
+              src="/icons/notification.svg"
+              className="w-6 h-6"
+              alt="notification icon"
+            />
           </button>
 
           <div className="flex items-center space-x-3 ml-4 pl-4 relative">
@@ -69,7 +90,7 @@ const TopNav = () => {
                 alt="Profile"
                 className="w-8 h-8 rounded-full"
               />
-              <img src="/icons/chevron-down.svg" alt="" />
+              <img src="/icons/chevron-down.svg" alt="chevron down icon" />
             </div>
 
             {isDropdownOpen && (

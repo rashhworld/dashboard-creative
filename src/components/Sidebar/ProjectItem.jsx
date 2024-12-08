@@ -8,7 +8,7 @@ const ProjectItem = ({ color, text, active }) => (
       <div className={`w-2 h-2 rounded-full ${color}`}></div>
       <span>{text}</span>
     </div>
-    {active && <img src="/icons/dot.svg" alt="" />}
+    {active && <img src="/icons/dot.svg" alt="dot icon" />}
   </div>
 );
 
